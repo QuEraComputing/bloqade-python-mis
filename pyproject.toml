@@ -24,3 +24,7 @@ build-backend = "pdm.backend"
 package-type = "library"
 
 
+[tool.pdm.dev-dependencies]
+dev = [
+    "-e file:///${PROJECT_ROOT}/../bloqade-python-2#egg=bloqade",
+]
