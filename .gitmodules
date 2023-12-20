@@ -1,0 +1,3 @@
+[submodule "bloqade-python"]
+	path = bloqade-python
+	url = https://github.com/QuEraComputing/bloqade-python
