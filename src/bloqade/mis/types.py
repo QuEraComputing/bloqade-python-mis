@@ -1,0 +1,14 @@
+from dataclasses import dataclass
+import numpy as np
+import networkx as nx
+
+
+@dataclass
+class Geometry:
+    positions: np.ndarray[np.float64, 2]
+
+
+@dataclass
+class MISProblem:
+    geometry: Geometry
+    graph: nx.Graph
