@@ -10,4 +10,3 @@ class Geometry:
 @dataclass
 class MISProblem:
     geometry: Geometry
-    
