@@ -6,7 +6,7 @@ authors = [
     {name = "Phillip Weinberg", email = "pweinberg@quera.com"},
 ]
 dependencies = [
-    "bloqade @ file:///${PROJECT_ROOT}/../bloqade-python-2",
+    "bloqade>=0.14.0",
     "numpy>=1.26.2",
     "networkx>=3.2.1",
 ]
@@ -26,4 +26,5 @@ package-type = "library"
 
 [tool.pdm.dev-dependencies]
 dev = [
+    "-e file:///${PROJECT_ROOT}/bloqade-python#egg=bloqade",
 ]
