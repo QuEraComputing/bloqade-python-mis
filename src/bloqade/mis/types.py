@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 import numpy as np
+import networkx as nx
 
 
 @dataclass
@@ -10,3 +11,4 @@ class Geometry:
 @dataclass
 class MISProblem:
     geometry: Geometry
+    graph: nx.Graph
