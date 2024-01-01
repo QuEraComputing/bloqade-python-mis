@@ -67,7 +67,7 @@ dev = [
     "vcrpy==4.4.0",
     "pyinstrument>=4.5.3",
     "scikit-optimize>=0.9.0",
-    "matplotlib>=3.8.1",
+    "matplotlib>=3.8.2",
     "icecream>=2.1.3",
     "-e file:///${PROJECT_ROOT}/bloqade-python#egg=bloqade",
 ]

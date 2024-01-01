@@ -1,7 +1,7 @@
 from dataclasses import dataclass
+from beartype import beartype
 import numpy as np
 import networkx as nx
-from beartype import beartype
 
 
 @dataclass(frozen=True)
