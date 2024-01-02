@@ -13,13 +13,12 @@ class MISProblem:
     @staticmethod
     @beartype
     def create(positions: np.ndarray[np.float64, 2], graph: nx.Graph) -> "MISProblem":
-        dists = dict()
         min_radius = 0
         max_radius = np.inf
 
         for i, pos_i in enumerate(positions[:]):
             for j, pos_j in enumerate(positions[i + 1 :], i + 1):
-                dist = dists.get((i, j), np.linalg.norm(pos_i - pos_j))
+                dist = np.linalg.norm(pos_i - pos_j)
 
                 if (i, j) in graph.edges:
                     min_radius = max(min_radius, dist)
