@@ -1,17 +1,194 @@
-import numpy as np
+# -*- coding: utf-8 -*-
+"""
+Created on Wed Jul 26 12:04:58 2023
+
+@author: jwurtz
+"""
 from decimal import Decimal
+import numpy as np
+import networkx as nx
 
 
-def round(x, resolution):
+def find_UDG_radius(position, graph):
+    """
+    Computes the optimal unit disk radius for a particular set
+        of positions and graph.
+    position   - [N x 2] array of points
+    graph       - network connectivity graph.
+        This should be a unit disk graph.
 
-    def do_round(x: Decimal) -> Decimal:
-        return int(x / resolution) * resolution
+    returns
+    radius      - Optimal unit disk radius of the graph
+    rmin        - Minimum distance
+    rmax        - Maximum distance
+    """
 
-    str_iter = map(str, x)
-    dec_iter = map(Decimal, str_iter)
-    rounded_iter = map(do_round, dec_iter)
-    float_iter = map(float, rounded_iter)
+    dists = np.sqrt(
+        (position[:, 0, None] - position[:, 0]) ** 2
+        + (position[:, 1, None] - position[:, 1]) ** 2
+    )
 
-    return np.asarray(list(float_iter), dtype=np.float64)
+    rmin = None
+    rmax = None
+    for i in range(position.shape[0]):
+        for j in range(i + 1, position.shape[0]):
+            if (i, j) in graph.edges:
+                rmin = rmin or dists[i, j]  # case where rmin is None
+                if rmin < dists[i, j]:
+                    rmin = dists[i, j]
+            elif (i, j) not in graph.edges:
+                rmax = rmax or dists[i, j]  # case where rmax is None
+                if rmax > dists[i, j]:
+                    rmax = dists[i, j]
+
+    if rmin > rmax:
+        raise ValueError(f"Graph is not a unit disk graph! ({rmin} > {rmax}))")
+
+    return np.sqrt(rmin * rmax), rmin, rmax
 
 
+def __row_cluster(points0: np.ndarray, threshold: Decimal, precision: Decimal = 0.01):
+    """
+    Clusters points in 1 dimension using tree clustering
+    points0 - Initial points
+    threshold - The minimum distance between clusters
+    """
+
+    points = np.copy(points0)
+    weights = np.ones(len(points))
+    generation = np.zeros(len(points))
+
+    i = 0
+    for ctr in range(len(points0) - 1):
+        dists = abs(points.reshape(len(points), 1) - points.reshape(1, len(points)))
+        dists[range(len(points)), range(len(points))] = np.inf
+
+        if dists.min() >= threshold:
+            break
+
+        i += dists.min()
+
+        mindist = np.unravel_index(np.argmin(dists), dists.shape)
+        points[[mindist[0], mindist[1]]]
+
+        newpt = (
+            points[mindist[0]] * weights[mindist[0]]
+            + points[mindist[1]] * weights[mindist[1]]
+        ) / (weights[mindist[0]] + weights[mindist[1]])
+
+        newpt = float(int(Decimal(str(newpt)) / precision) * precision)
+        newwt = weights[mindist[0]] + weights[mindist[1]]
+
+        points = np.concatenate((np.delete(points, mindist), [newpt]))
+        weights = np.concatenate((np.delete(weights, mindist), [newwt]))
+        generation = np.concatenate((np.delete(generation, mindist), [i]))
+
+    return points
+
+
+def rowify(
+    points0: np.ndarray,
+    horizontal_threshold: Decimal,
+    row_threshold: Decimal,
+    precision: Decimal,
+):
+    """
+    "Rowifys" a set of points to obey the row and minimum spacing constraint.
+    INPUTS
+    points - locations of vertices of some graph or other geometric object
+    horizontal_threshold - Minimum horizontal spacing between atoms
+    in the same row row_threshold - Minimum vertical (row) spacing between rows.
+
+    RETURNS
+    positions     - Positions of each atom in the array
+    assignments_F - "Forward" assignements; a list indexed by vertex,
+        with values of the atom index.
+                       Note that multiple vertices may be assigned to a
+        single atom (many-to-one)
+    assignments_R - "Reverse" assignements; A dict indexed by atom number,
+        with values as a list of
+                       every vertex assigned to that atom.
+    ERROR_OUT - The average root-mean-square error between vertex
+        positions and atom positions
+
+    """
+
+    rows = __row_cluster(points0[:, 1], row_threshold, precision)
+
+    point_assignments = np.array([np.argmin(abs(rows - xx)) for xx in points0[:, 1]])
+
+    all_columns = []
+    all_atoms = []
+
+    for ind in range(len(rows)):
+        points_in = np.where(point_assignments == ind)[0]
+
+        column = __row_cluster(points0[points_in, 0], horizontal_threshold, precision)
+        all_columns.append(column)
+
+        all_atoms += [(xx, rows[ind]) for xx in column]
+
+    all_atoms = np.array(all_atoms)
+
+    # Determine point assignments to atoms...
+    assignments_F = []
+    assignments_R = {ind: [] for ind in range(all_atoms.shape[0])}
+    RMS_error = 0
+    for ind in range(points0.shape[0]):
+        dist = (points0[ind, 0] - all_atoms[:, 0]) ** 2 + (
+            points0[ind, 1] - all_atoms[:, 1]
+        ) ** 2
+        assignments_F.append(np.argmin(dist))
+        assignments_R[np.argmin(dist)].append(ind)
+
+        RMS_error += np.min(dist)
+
+    ERROR_OUT = np.sqrt(RMS_error / points0.shape[0])
+    return all_atoms, assignments_F, assignments_R, ERROR_OUT
+
+
+def logical_to_physical(
+    positions: list[tuple[float, float]], graph: nx.Graph, radius: float = 7.0
+):
+    """
+    Map a logical unit disk graph to a rowified and scaled graph
+
+    Parameters
+    ----------
+    positions : list[tuple[float,float]]
+        Positions of each vertex
+    graph : nx.Graph
+        The unit disk graph represented by the positions.
+    radius : float, optional
+        The associated blockade radius. The default is 7.0.
+
+    Raises
+    ------
+    NotImplementedError
+        Occurs if there is a many-to-one map of multiple vertices to
+         a single atom.
+
+    Returns
+    -------
+    positions_out : list[list[float,float]]
+        Positions of each atom, ordered as a one-to-one map of the
+        original positions.
+
+    """
+    # First compute the unit disk radius
+    Rudg, rmin, rmax = find_UDG_radius(positions, graph)
+
+    positions0 = np.array(positions) * (radius / Rudg)
+
+    positions_rowified, assignments_F, assignements_R, _ = rowify(positions0, 4.0, 4.0)
+
+    if len(positions0) != len(positions_rowified):
+        raise NotImplementedError(
+            "The rowified map is many-to-one from vertices to atoms!"
+        )
+
+    # Make sure the rowified positions are ordered in the same
+    # way as the original positions.
+    positions_out = [positions_rowified[ind].round(1).tolist() for ind in assignments_F]
+
+    return positions_out
