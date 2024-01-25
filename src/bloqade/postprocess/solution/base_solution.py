@@ -4,8 +4,8 @@ Created on Mon Nov  6 14:10:45 2023
 
 @author: jwurtz
 """
-from postprocess.problem.base_problem import Problem
-import postprocess
+from bloqade.postprocess.problem.base_problem import Problem
+import bloqade.postprocess as postprocess
 from abc import ABC, abstractmethod, abstractstaticmethod, abstractproperty
 
 import bloqade

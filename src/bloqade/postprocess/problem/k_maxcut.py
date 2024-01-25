@@ -5,9 +5,9 @@ Created on Wed Nov  8 09:59:12 2023
 @author: jwurtz
 """
 
-from postprocess.problem.base_problem import Problem
-from postprocess.utils.visualize_graph import visualize_graph
-import postprocess
+from bloqade.postprocess.problem.base_problem import Problem
+from bloqade.postprocess.utils.visualize_graph import visualize_graph
+import bloqade.postprocess as postprocess
 
 
 import networkx as nx

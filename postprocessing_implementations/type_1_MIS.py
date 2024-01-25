@@ -12,7 +12,7 @@ from bloqade.utils.visualize_UDG import get_UDG
 
 import bloqade.postprocess as postprocess
 import numpy as np
-import os,tqdm
+import os,tqdm,json
 
 filename = os.path.join(os.getcwd(),"DATA","23_11_08_t1_MIS.json")
 
@@ -21,12 +21,20 @@ record = postprocess.record.local_record(filename)
 #record = recorder(local_file_path)
 
 N = 3
-seed = 42
-randgen = np.random.RandomState(seed)
+seed_problem = 42
+randgen = np.random.RandomState(seed_problem)
 x, y = np.meshgrid(range(N), range(N))
 pos = np.array([x.flatten(), y.flatten()]).T
 perm = randgen.permutation(N**2)
 positions = pos[perm[0:int(N**2 * .7)]]
+
+
+prototype_graph = os.path.join(os.getcwd(),"generate_figures_pos.json")
+if seed_problem == 0:
+    with open(prototype_graph,"r") as io:
+        dat = json.load(io)
+    positions = np.array(dat["positions"])
+    
 
 problem = unit_disk_maximum_independent_set(positions,0.72)
 solution = greedy_MIS_solution(problem, backend = {"quantum": "python_emulate", "num_shots": 20})

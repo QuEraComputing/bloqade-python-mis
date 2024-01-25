@@ -36,9 +36,9 @@ randgen = np.random.RandomState(seed_problem)
 
 
         
-        
+prototype_graph = os.path.join(os.getcwd(),"generate_figures_pos.json")
 if seed_problem == 0:
-    with open("C:\\Users\\jwurtz\\Documents\\PYTHON\\postprocess_paper\\generate_figures_pos.json","r") as io:
+    with open(prototype_graph,"r") as io:
         dat = json.load(io)
     positions = np.array(dat["positions"])
 

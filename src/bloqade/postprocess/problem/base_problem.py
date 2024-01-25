@@ -6,7 +6,7 @@ Created on Mon Nov  6 14:10:30 2023
 """
 
 from abc import ABC, abstractmethod, abstractstaticmethod
-import postprocess
+import bloqade.postprocess as postprocess
 
 class Problem(ABC):
 

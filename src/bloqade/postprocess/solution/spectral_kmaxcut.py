@@ -4,11 +4,11 @@ Created on Wed Nov  8 09:58:48 2023
 
 @author: jwurtz
 """
-from postprocess.solution.base_solution import Solution
-from postprocess.problem.k_maxcut import k_maxcut
-from postprocess.utils.udg_graph_mapping import logical_to_physical
+from bloqade.postprocess.solution.base_solution import Solution
+from bloqade.postprocess.problem.k_maxcut import k_maxcut
+from bloqade.utils.udg_graph_mapping import logical_to_physical
 
-import postprocess.utils.observables as observables
+import bloqade.utils.observables as observables
 
 import numpy as np
 import networkx as nx

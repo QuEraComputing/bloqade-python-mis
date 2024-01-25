@@ -11,7 +11,7 @@ import time
 import json
 import numpy as np
 
-import postprocess
+import bloqade.postprocess as postprocess
 import bloqade
 
 import functools

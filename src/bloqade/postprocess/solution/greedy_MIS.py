@@ -5,10 +5,10 @@ Created on Tue Nov  7 13:57:39 2023
 @author: jwurtz
 """
 
-from postprocess.solution.base_solution import Solution
-from postprocess.problem.MIS_problem import unit_disk_maximum_independent_set
-from postprocess.utils.maximal_IS import greedy_mIS, greedy_remove
-from postprocess.utils.udg_graph_mapping import logical_to_physical
+from bloqade.postprocess.solution.base_solution import Solution
+from bloqade.postprocess.problem.MIS_problem import unit_disk_maximum_independent_set
+from bloqade.utils.maximal_IS import greedy_mIS, greedy_remove
+from bloqade.utils.udg_graph_mapping import logical_to_physical
 
 import numpy as np
 

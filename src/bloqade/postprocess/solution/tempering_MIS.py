@@ -4,12 +4,12 @@ Created on Tue Nov  7 14:05:36 2023
 
 @author: jwurtz
 """
-from postprocess.solution.base_solution import Solution
-from postprocess.problem.MIS_problem import unit_disk_maximum_independent_set
-from postprocess.utils.maximal_IS import greedy_mIS, greedy_remove, get_mIS
-from postprocess.utils.udg_graph_mapping import logical_to_physical
+from bloqade.postprocess.solution.base_solution import Solution
+from bloqade.postprocess.problem.MIS_problem import unit_disk_maximum_independent_set
+from bloqade.utils.maximal_IS import greedy_mIS, greedy_remove, get_mIS
+from bloqade.utils.udg_graph_mapping import logical_to_physical
 
-import postprocess.utils.clustering
+import bloqade.utils.clustering as clustering
 
 import numpy as np
 import networkx as nx
@@ -37,7 +37,7 @@ class tempering_MIS_solution(Solution):
         self._backend = backend
         
         
-        self.cluster_generator = postprocess.utils.clustering.sandpile(self.problem.graph)
+        self.cluster_generator = clustering.sandpile(self.problem.graph)
     
     
     def ansatz(self,quantum_parameters:dict):
@@ -120,9 +120,9 @@ class tempering_MIS_solution(Solution):
             
             # Compute the cluster based on a sandpile model (self orginized criticality)
             
-            if isinstance(self.cluster_generator,postprocess.utils.clustering.sandpile):
+            if isinstance(self.cluster_generator,clustering.sandpile):
                 internal = self.cluster_generator()
-            elif isinstance(self.cluster_generator,postprocess.utils.clustering.percolation):
+            elif isinstance(self.cluster_generator,clustering.percolation):
                 internal = self.cluster_generator(classical_parameters["percolation_dropout"])
             else:
                 raise RuntimeError("Unknown cluster generator instance:",self.cluster_generator)
