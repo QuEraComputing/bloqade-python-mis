@@ -16,6 +16,12 @@ from bloqade import start
 from bloqade.ir import var
 
 class greedy_MIS_solution(Solution):
+    """
+    A hybrid greedy solution to MIS, implementing a type-1 postprocessing.
+    In this implementation, a measurement from a neutral atom computer is used
+    as a warm start for a 1-local greedy algorithm to post-process the solution
+    into a locally optimal and valid maximal independent set.
+    """
     
     
     def __init__(self, problem:unit_disk_maximum_independent_set, backend):
@@ -155,7 +161,12 @@ class greedy_MIS_solution(Solution):
         
 
 class classical_greedy_MIS_solution(greedy_MIS_solution):
-    
+    """
+    A classical-only solution to MIS, implementing a type-1 postprocessing.
+    In this implementation, an all-zeros bitstring is used
+    as a warm start for a 1-local greedy algorithm to post-process the solution
+    into a locally optimal and valid maximal independent set.
+    """
     def get_bitstrings(self,quantum_parameters):
         nsamples = self._backend["num_shots"]
         

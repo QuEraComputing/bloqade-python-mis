@@ -1,23 +1,28 @@
 # -*- coding: utf-8 -*-
 """
-Created on Wed Jul 26 12:04:58 2023
+Functions to map logical vertex positions of a unit disk graph into
+atom positions sutable for neutral atoms and Rydberg blockade.
 
 @author: jwurtz
 """
 import numpy as np
 import networkx as nx
 
-def find_UDG_radius(position, graph):
-    '''
+def find_UDG_radius(position:list[list[float]], graph:nx.Graph):
+    """
     Computes the optimal unit disk radius for a particular set of positions and graph.
+    
+    Parameters
+    -------
     position   - [N x 2] array of points
     graph       - network connectivity graph. This should be a unit disk graph.
     
-    returns
+    Returns
+    -------
     radius      - Optimal unit disk radius of the graph
     rmin        - Minimum distance
     rmax        - Maximum distance
-    '''
+    """
     
     dists = np.sqrt((position[:,0,None] - position[:,0])**2
                + (position[:,1,None] - position[:,1])**2)
@@ -41,6 +46,8 @@ def find_UDG_radius(position, graph):
 
 def __row_cluster(points0:np.ndarray, threshold:float):
     """
+    Utility function for clustering.
+    
     Clusters points in 1 dimension using tree clustering
     points0 - Initial points
     threshold - The minimum distance between clusters
@@ -83,12 +90,15 @@ def __row_cluster(points0:np.ndarray, threshold:float):
 def rowify(points0:np.ndarray, horizontal_threshold:float, row_threshold:float ):
     """
     "Rowifys" a set of points to obey the row and minimum spacing constraint.
-    INPUTS
+    
+    Parameters
+    ----------
     points - locations of vertices of some graph or other geometric object
     horizontal_threshold - Minimum horizontal spacing between atoms in the same row
     row_threshold - Minimum vertical (row) spacing between rows.
 
-    RETURNS
+    Returns
+    -------
     positions     - Positions of each atom in the array
     assignments_F - "Forward" assignements; a list indexed by vertex, with values of the atom index.
                        Note that multiple vertices may be assigned to a single atom (many-to-one)

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-Created on Wed Nov 29 10:49:53 2023
+Generators of sandpile and percolation-based clustering on graphs, for use
+in cluster update monte carlo optimization of graphs.
 
 @author: jwurtz
 """
@@ -10,7 +11,7 @@ import numpy as np
 class sandpile(list):
     """
     A generalized sandpile simulator, which generates self-organized critical
-    clusters on a graph.
+    clusters on a graph. See https://www.nature.com/articles/s41598-018-20275-7
     """
     def __init__(self,graph:nx.Graph,dissapation = 0.05):
         """

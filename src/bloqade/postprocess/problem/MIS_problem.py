@@ -44,8 +44,14 @@ class maximum_independent_set(Problem):
     def cost(self,solution:list[int],penalty=-1e10):
         """
         Compute the cost of a candidate solution
-        The cost is the number of edges that need to be cut in order to
-        separate the graph into [nclusters] disconnected subgraphs.
+        The cost is the size of the independent set
+        
+        Parameters
+        ----------
+        solution - list[int]: a binary (0 or 1) list indexing if a vertex is
+                   in (1) or not in (0) the independent set
+        pentalty - The penalty for an independent set violation. Note that any
+                   non-independent set will not pass validation
         """
         
         self._validate(solution)
@@ -116,6 +122,11 @@ class maximum_independent_set(Problem):
         return strout
 
 class unit_disk_maximum_independent_set(maximum_independent_set):
+    """
+    A maximum independent set problem whose graph has the property that
+    it is a unit disk graph, shown constructively via a list of positions.
+    The graph is directly constructed from positions and a unit disk radius.
+    """
     def __init__(self,positions:list[tuple[float,float]],ud_radius:float):
         """
         Parameters

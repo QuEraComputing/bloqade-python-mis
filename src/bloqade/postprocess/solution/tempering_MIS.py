@@ -19,6 +19,12 @@ from bloqade.ir import var
 
 
 class tempering_MIS_solution(Solution):
+    """
+    A Monte Carlo solution to the MIS problem, implementing type-3 postprocessing
+    In this implementation, measurements are used as a reservior to update
+    subsets of a unit disk MIS problem in cluster simulated annealing steps.
+    The clusters are selected using a sandpile model.
+    """
     
     def __init__(self, problem:unit_disk_maximum_independent_set, backend={}):
         """
@@ -181,7 +187,12 @@ class tempering_MIS_solution(Solution):
 
 
 class classical_tempering_MIS_solution(tempering_MIS_solution):
-    
+    """
+    A Monte Carlo solution to the MIS problem, implementing type-3 postprocessing
+    In this implementation, the all-zeros bitstring is used as a reservior to update
+    subsets of a unit disk MIS problem in cluster simulated annealing steps.
+    The clusters are selected using a sandpile model.
+    """
     def get_bitstrings(self,quantum_parameters={}):
         
         if quantum_parameters["sampling"]=="all":

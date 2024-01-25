@@ -49,6 +49,9 @@ class null_record(record):
 
 
 class local_record(record):
+    """
+    A record that is saved to a local file system
+    """
     def __init__(self,filename:str,logfrequency:int=1e99):
         self.filename = filename
         self.logfrequency = 1e99
@@ -83,7 +86,9 @@ class local_record(record):
         return dout
         
 class AWS_record(record):
-    
+    """
+    A record that is saved to an AWS S3
+    """
     def __init__(self,s3_instance):
         raise NotImplementedError("Not implemented!")
 

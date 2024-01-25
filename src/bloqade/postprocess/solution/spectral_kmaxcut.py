@@ -18,11 +18,22 @@ from bloqade import start
 from bloqade.ir import var
 
 class spectral_kmaxcut_solution(Solution):
+    """
+    A spectral clustering solution to the kmaxcut or clustering problem,
+    implementing type-2 postprocessing
+    In this implementation, the eigenvalues of a connected correlation function
+    measured from the quantum device are used as a feature for k-means clustering.
+    """
     
     def __init__(self,problem:k_maxcut, backend):
         """
         Quantum clustering of some imput graph,
         based on spectral clustering of the connected correlation function
+        
+        Parameters
+        ----------
+        problem - a k-maxcut problem instance
+        backend - the dictionary describing the quantum backend.
         """
         super().__init__(problem, backend)
         self.problem = problem
@@ -69,6 +80,10 @@ class spectral_kmaxcut_solution(Solution):
             
         
     def _get_features_centers_partition(self,quantum_parameters,classical_parameters):
+        """
+        Helper function to compute the eigenvectors of the correlation function
+        and implement k-means clustering
+        """
         bitstrings = self.get_bitstrings(quantum_parameters)
         
         # Compute the connected correlation functions

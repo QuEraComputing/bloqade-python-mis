@@ -22,7 +22,8 @@ class k_maxcut(Problem):
                  which: str,
                  ):
         """
-        A class defining clustering
+        A class defining k-maxcut and clustering, which seeks to minimize
+        or maximize the number of edges in opposite partitions
 
         Parameters
         ----------
