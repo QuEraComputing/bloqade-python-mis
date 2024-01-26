@@ -5,7 +5,7 @@ Created on Tue Nov  7 15:35:45 2023
 @author: jwurtz
 """
 from bloqade.postprocess.problem.base_problem import Problem
-from bloqade.postprocess.utils.visualize_graph import visualize_graph
+from bloqade.utils.visualize_graph import visualize_graph
 import bloqade.postprocess as postprocess
 from bloqade.utils.visualize_UDG import get_UDG
 

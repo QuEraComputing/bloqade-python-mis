@@ -19,7 +19,7 @@ import os
 import json
 import tqdm
 
-filename = os.path.join(os.getcwd(),"DATA","23_11_30_t3_kmaxcut.json")
+filename = os.path.join(os.getcwd(),"DATA","type2_kmaxcut_data.json")
 
 #%%
 record = postprocess.record.local_record(filename)

@@ -6,7 +6,7 @@ Created on Wed Nov  8 09:59:12 2023
 """
 
 from bloqade.postprocess.problem.base_problem import Problem
-from bloqade.postprocess.utils.visualize_graph import visualize_graph
+from bloqade.utils.visualize_graph import visualize_graph
 import bloqade.postprocess as postprocess
 
 

@@ -6,7 +6,7 @@ Greedy FLIP solvers for the k-maxcut problem
 """
 import numpy as np
 
-from postprocess.problem.k_maxcut import k_maxcut
+from bloqade.postprocess.problem.k_maxcut import k_maxcut
 
 def single_flip(problem:k_maxcut,sol:list):
     """

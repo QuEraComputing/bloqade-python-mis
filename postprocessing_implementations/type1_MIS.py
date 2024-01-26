@@ -4,7 +4,7 @@ Created on Mon Nov  6 14:11:00 2023
 
 @author: jwurtz
 """
-from bloqade.postprocess.utils import record
+from bloqade.utils import record
 from bloqade.postprocess.problem.MIS_problem import unit_disk_maximum_independent_set
 from bloqade.postprocess.solution.greedy_MIS import greedy_MIS_solution,classical_greedy_MIS_solution
 from bloqade.postprocess.optimizer.base_optimizer import Optimizer
@@ -14,7 +14,7 @@ import bloqade.postprocess as postprocess
 import numpy as np
 import os,tqdm,json
 
-filename = os.path.join(os.getcwd(),"DATA","23_11_08_t1_MIS.json")
+filename = os.path.join(os.getcwd(),"DATA","type1_MIS_data.json")
 
 #%%
 record = postprocess.record.local_record(filename)
