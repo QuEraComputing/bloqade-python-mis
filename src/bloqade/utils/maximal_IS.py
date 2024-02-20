@@ -4,7 +4,7 @@ Utilities to compute maximal independent sets using greedy strategies
 
 @author: jwurtz
 """
-from numpy import *
+import numpy as np
 import networkx as nx
 
 
@@ -16,7 +16,7 @@ def get_mIS(G: nx.Graph, ordering=None):
         sequentially added to the independent set.
     """
     if type(ordering) == type(None):
-        ordering = random.permutation(list(G.nodes))
+        ordering = np.random.permutation(list(G.nodes))
 
     soln = set()
     for ctr in ordering:
@@ -26,7 +26,7 @@ def get_mIS(G: nx.Graph, ordering=None):
 
     return soln
 
-    binout = zeros(len(G.nodes))
+    binout = np.zeros(len(G.nodes))
     binout[list(soln)] = 1
     return binout
 
@@ -44,23 +44,26 @@ def greedy_mIS(G, soln: set = set(), dumb=False):
         False: do a "one local" greedy that picks the vertices with the fewest
                adjacent vertices.
     """
-    new_one = True
-    wctr = 0
+    # new_one = True
+    # wctr = 0
 
-    CUTOFF__ = 10_000
+    # CUTOFF__ = 10_000
 
-    if dumb == True:
+    if dumb:
         notinset = set(list(G.nodes)).difference(soln)
         ordering = (
-            random.permutation(list(soln)).tolist()
-            + random.permutation(list(notinset)).tolist()
+            np.random.permutation(list(soln)).tolist()
+            + np.random.permutation(list(notinset)).tolist()
         )
         return get_mIS(G, ordering)
 
-    reduce = lambda ind, graph: graph.subgraph(
-        set(graph.nodes).difference(graph.neighbors(ind)).difference([ind])
-    )
-    degree = lambda graph: array([graph.degree(ind) for ind in graph.nodes])
+    def reduce(ind, graph):
+        return graph.subgraph(
+            set(graph.nodes).difference(graph.neighbors(ind)).difference([ind])
+        )
+
+    def degree(graph):
+        return np.array([graph.degree(ind) for ind in graph.nodes])
 
     Gsub = nx.Graph(G)
     for ind in list(soln):
@@ -69,8 +72,8 @@ def greedy_mIS(G, soln: set = set(), dumb=False):
 
     while len(Gsub.nodes) > 0:
         # print(Gsub.nodes)
-        deg = degree(Gsub) + 1e-5 * random.rand(len(Gsub.nodes))
-        minind = list(Gsub.nodes)[argmin(deg)]
+        deg = degree(Gsub) + 1e-5 * np.random.rand(len(Gsub.nodes))
+        minind = list(Gsub.nodes)[np.argmin(deg)]
         Gsub = reduce(minind, Gsub)
         soln.add(minind)
         # print(minind)
@@ -85,24 +88,28 @@ def greedy_weighted_mIS(G, weights, soln=set(), bias=1):
     weights vertices with low connectivity.
     G - networkx graph to compute the solution to
     weights - A list of weights to each vertex in the graph.
-              !! Note that this implicitly assumes the graph labels are integers 0..N-1 !!
+              !! Note that this implicitly assumes the graph labels are integers 0..N-1
     soln - The initial independent set solution; optional.
     bias - The bias between choosing vertices with high weight, vs choosing vertices
            with low connectivity.
-           For bias >> 1, the algorithm selects the vertex whose neighbors are the lowest weight
+           For bias >> 1, the algorithm selects the vertex whose neighbors are the
+           lowest weight
            For bias = 0, the algorithm selects the vertex that is the highest weight.
            For bias = 1 (default), the algorithm equally balances the two.
     """
 
-    reduce = lambda ind, graph: graph.subgraph(
-        set(graph.nodes).difference(graph.neighbors(ind)).difference([ind])
-    )
-    degree = lambda graph: array(
-        [
-            bias * sum(weights[list(graph.neighbors(ind))]) - weights[ind]
-            for ind in graph.nodes
-        ]
-    )
+    def reduce(ind, graph):
+        return graph.subgraph(
+            set(graph.nodes).difference(graph.neighbors(ind)).difference([ind])
+        )
+
+    def degree(graph):
+        return np.array(
+            [
+                bias * sum(weights[list(graph.neighbors(ind))]) - weights[ind]
+                for ind in graph.nodes
+            ]
+        )
 
     Gsub = nx.Graph(G)
     for ind in list(soln):
@@ -112,9 +119,9 @@ def greedy_weighted_mIS(G, weights, soln=set(), bias=1):
     while len(Gsub.nodes) > 0:
         # print(Gsub.nodes)
 
-        deg = degree(Gsub) + 1e-5 * random.rand(len(Gsub.nodes))
+        deg = degree(Gsub) + 1e-5 * np.random.rand(len(Gsub.nodes))
 
-        minind = list(Gsub.nodes)[argmin(deg)]
+        minind = list(Gsub.nodes)[np.argmin(deg)]
         Gsub = reduce(minind, Gsub)
         soln.add(minind)
         # print(minind)

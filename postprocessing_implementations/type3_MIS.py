@@ -85,7 +85,8 @@ optimize2 = Optimizer.from_file(solution2, record2)
 classical_vals = []
 quantum_vals = []
 
-# best_quantum_parameters, best_classical_parameters = quantum_parameters,classical_parameters
+# best_quantum_parameters, best_classical_parameters
+# = quantum_parameters,classical_parameters
 best_quantum_parameters, best_classical_parameters = solution2.unflatten_parameters(
     optimize2.tracker[np.argmin([q[1] for q in optimize2.tracker])][0]
 )
@@ -112,7 +113,7 @@ std_q = np.std(quantum_vals, 0)
 xx = np.linspace(0, best_classical_parameters["epochs"], len(ave_c))
 
 # %%
-import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt  # noqa: E402
 
 plt.rcParams["font.size"] = 20
 plt.rcParams["font.family"] = ["serif"]

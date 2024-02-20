@@ -18,7 +18,7 @@ from bloqade.factory import (
 import bloqade.ir as _ir
 from bloqade.constants import RB_C6
 
-import utils.clustering as clustering
+# import bloqade.utils.clustering as clustering
 
 import importlib.metadata
 

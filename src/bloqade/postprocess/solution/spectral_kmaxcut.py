@@ -11,7 +11,8 @@ from bloqade.utils.udg_graph_mapping import logical_to_physical
 import bloqade.utils.observables as observables
 
 import numpy as np
-import networkx as nx
+
+# import networkx as nx
 import scipy
 
 from bloqade import start
@@ -98,7 +99,8 @@ class spectral_kmaxcut_solution(Solution):
         # Compute the connected correlation functions
         # correlation_function = []
         # for data in bitstrings:
-        #    correlation_function.append(observables.connected_correlation(data.T.astype(int)))
+        #    correlation_function.append(observables
+        # .connected_correlation(data.T.astype(int)))
 
         correlation_function = 0
         for k, data in enumerate(bitstrings):

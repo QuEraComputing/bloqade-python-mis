@@ -153,7 +153,7 @@ class unit_disk_maximum_independent_set(maximum_independent_set):
     @staticmethod
     def from_file(record: postprocess.record.record):
         payload = json.loads(record.get(unit_disk_maximum_independent_set))
-        graph = nx.Graph(payload["edges"])
+        # graph = nx.Graph(payload["edges"])
         positions = np.array(payload["positions"])
         ud_radius = payload["ud_radius"]
 

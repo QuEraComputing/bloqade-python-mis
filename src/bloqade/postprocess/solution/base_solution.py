@@ -6,7 +6,7 @@ Created on Mon Nov  6 14:10:45 2023
 """
 from bloqade.postprocess.problem.base_problem import Problem
 import bloqade.postprocess as postprocess
-from abc import ABC, abstractmethod, abstractstaticmethod, abstractproperty
+from abc import ABC, abstractmethod, abstractproperty
 
 import bloqade
 import json
@@ -14,19 +14,24 @@ import json
 
 class Solution(ABC):
     """
-    The `Solution` class serves as an abstract base class for defining various solution strategies
-    or ansatze for a given optimization problem. The class provides a framework for generating
-    parameterized quantum circuits, computing candidate solutions, and evaluating objective functions.
+    The `Solution` class serves as an abstract base class for defining various
+    solution strategies
+    or ansatze for a given optimization problem. The class provides a framework
+    for generating
+    parameterized quantum circuits, computing candidate solutions, and evaluating
+    objective functions.
 
     Attributes:
-    - problem (Problem): The specific problem instance for which the solution is being computed.
+    - problem (Problem): The specific problem instance for which the solution is
+    being computed.
     - _job_tape (dict): A dictionary to store the results of quantum jobs.
     - _backend (dict): Information about the quantum backend being used.
     """
 
     def __init__(self, problem: Problem, backend: dict):
         """
-        Initializes the Solution class with a given problem instance and backend information.
+        Initializes the Solution class with a given problem instance and
+        backend information.
         """
 
         self.problem = problem
@@ -48,11 +53,13 @@ class Solution(ABC):
     @abstractmethod
     def ansatz(self, quantum_parameters: dict, classical_parameters: dict = {}):
         """
-        Generates parameterized quantum circuits based on provided quantum and classical parameters.
+        Generates parameterized quantum circuits based on provided quantum
+        and classical parameters.
 
         Args:
         - quantum_parameters (dict): Parameters for the quantum circuit.
-        - classical_parameters (dict, optional): Classical parameters for the circuit.
+        - classical_parameters (dict, optional): Classical parameters
+        for the circuit.
 
         Returns:
         - Quantum circuit or the appropriate representation.
@@ -145,7 +152,8 @@ class Solution(ABC):
                 return self._job_tape[key]
 
         # program.braket(...) -> program.braket.aquila().submit(...)
-        # program.braket_simulator(...) -> program.braket.local_emulator(...).submit(...)
+        # program.braket_simulator(...) -> program.braket.
+        # local_emulator(...).submit(...)
         # program.quera(...) -> program.quera.aquila(...).submit()
 
         # Else, submit
@@ -170,7 +178,8 @@ class Solution(ABC):
                 .run(self._backend["num_shots"])
             )
         elif self._backend["quantum"] == "internal_aquila":
-            # fname = "C:\\Users\\qpc1\\Documents\\GitHub\\hybrid_jobs\\hybrid_algorithms\\prod_config.json"
+            # fname = "C:\\Users\\qpc1\\Documents\\GitHub
+            # \\hybrid_jobs\\hybrid_algorithms\\prod_config.json"
             fname = "C:\\Users\\jwurtz\\Downloads\\prod_config.json"
             submitted_job = (
                 self.ansatz(quantum_parameters)
@@ -211,7 +220,7 @@ class Solution(ABC):
             for k, bb in enumerate(bstr):
                 if len(bb) != job.tasks[k].nshots:
                     isready = False
-            if isready == True:
+            if isready:
                 return job.report().bitstrings(False)
 
             print("Waiting for job to be complete...")

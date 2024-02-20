@@ -7,17 +7,18 @@ Created on Mon Nov  6 14:09:25 2023
 from typing import Callable, Dict, List, Tuple, Union
 from scipy.optimize import minimize
 from skopt import gp_minimize
-import time
+
+# import time
 import json
 import numpy as np
 
 import bloqade.postprocess as postprocess
 import bloqade
 
-import functools
+# import functools
 
 from braket.jobs import (
-    InstanceConfig,
+    # InstanceConfig,
     hybrid_job,
 )
 
@@ -113,7 +114,7 @@ class Optimizer:
         self.recorder.put(self)
 
         self.niters += 1
-        if self.verbose == True:
+        if self.verbose:
             print(self.niters, payload)
 
     def _flatten_parameters(self, x):
@@ -176,10 +177,13 @@ class Optimizer:
         self, delta: float, learning_rate: float
     ) -> Dict[str, Union[float, List[float], np.ndarray, str, bool]]:
         """
-        Implements the Simultaneous Perturbation Stochastic Approximation (SPSA) optimization algorithm.
+        Implements the Simultaneous Perturbation Stochastic Approximation (SPSA)
+        optimization algorithm.
 
-        SPSA is a gradient-free optimization method suitable for noisy cost functions. The method approximates
-        the gradient using simultaneous random perturbations, which makes it especially useful for quantum
+        SPSA is a gradient-free optimization method suitable for noisy cost functions.
+        The method approximates
+        the gradient using simultaneous random perturbations, which makes it especially
+        useful for quantum
         optimization problems.
         """
 
@@ -244,8 +248,10 @@ class Optimizer:
         """
         Implements the Bayesian optimization method using Gaussian Processes.
 
-        Bayesian optimization is a model-based optimization method that uses a probabilistic model
-        (typically Gaussian Processes) to predict the function values and decide where to evaluate next.
+        Bayesian optimization is a model-based optimization method that uses a
+        probabilistic model
+        (typically Gaussian Processes) to predict the function values and decide
+        where to evaluate next.
         It's particularly useful for optimizing expensive black-box functions.
         """
 
@@ -263,9 +269,12 @@ class Optimizer:
         """
         Main method to perform optimization based on the chosen method.
 
-        The function internally calls the appropriate optimization routine (e.g., SPSA, Bayesian, etc.)
-        and returns the optimization result. The result typically includes the best parameters found,
-        the value of the cost function at those parameters, and other relevant information.
+        The function internally calls the appropriate optimization
+        routine (e.g., SPSA, Bayesian, etc.)
+        and returns the optimization result. The result typically
+        includes the best parameters found,
+        the value of the cost function at those parameters, and other
+        relevant information.
         """
 
         self.fixed_values = fixed_values
@@ -298,7 +307,8 @@ class Optimizer:
         Sets the job onto AWS BraKet using a particular device. Not implemented!
         """
         raise NotImplementedError("I have not yet figured out how to do remote hybrid!")
-        # Generate the hybrid job instance (I'm doing it this way instead of the decorator)
+        # Generate the hybrid job instance
+        # (I'm doing it this way instead of the decorator)
         hj = hybrid_job(
             device=device,
             local=local,

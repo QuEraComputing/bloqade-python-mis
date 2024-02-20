@@ -17,7 +17,8 @@ def visualize_UDG(
     """
     Draws a unit disk graph.
     positions - 2d positions of each vertex
-    radii     - Float. radius of each vertex. Vertices are connected if the unit disks overlap.
+    radii     - Float. radius of each vertex. Vertices are connected if the unit disks
+    overlap.
                 !! This is a factor of 2 from usual !!
     draw_disks - If unit disks should be drawn.
             True  : Draw disks for all vertices
@@ -27,7 +28,8 @@ def visualize_UDG(
             int   : color assignment for all vertices.
                 0   > Black.            Indicates an inert / ground state Rydberg atom
                 1   > "Red"  #C2477F.   Indicates a Rydberg independent set excited atom
-                2   > "Pink" #FFE5E5    Indicates an inert / ground state Rydberg atom against a dark background
+                2   > "Pink" #FFE5E5    Indicates an inert / ground state Rydberg atom
+                against a dark background
                 3   > "Blue" #6437FF    Default; used when a vertex is stateless
             str > a color descriptor for every vertex. eg #8ad679
             list  : color assignment for each vertex.
@@ -80,7 +82,7 @@ def visualize_UDG(
 
     # If no axis given, generate a new plot. The size will be chosen such that each
     #  edge is a consistent size across plots.
-    if ax == None:
+    if ax is None:
         figsize = position_extent / radii + 2
 
         scaling = 0.5 ** np.ceil(np.log2(max(figsize) / 16))
@@ -127,10 +129,10 @@ def visualize_UDG(
     # EDGE_COLOR_LOOKUP = {0:'#333333',1:'grey',2:'#E6E6E6',-1:'white'}
 
     # Clean the node color list
-    if type(color_nodes) == type(1):
+    if isinstance(color_nodes, int):
         color_nodes2 = VERTEX_COLOR_LOOKUP[color_nodes]
 
-    elif type(color_nodes) == type("string"):
+    elif isinstance(color_nodes, str):
         color_nodes2 = color_nodes
     elif len(color_nodes) >= len(G.nodes):
         color_nodes2 = []
@@ -143,20 +145,20 @@ def visualize_UDG(
         color_nodes2 = "k"
 
     # Clean the edge color list
-    if type(color_edges) == type(1):
+    if isinstance(color_edges, int):
         color_edges2 = EDGE_COLOR_LOOKUP[color_edges]
         edge_weights = EDGE_WIDTH_LOOKUP[color_edges]
-    elif type(color_edges) == type(("string", 1)):
+    elif isinstance(color_edges, tuple):
         color_edges2 = color_edges[0]
         edge_weights = color_edges[1]
     elif len(color_edges) >= len(G.edges):
         color_edges2 = []
         edge_weights = []
         for edge in G.edges:
-            if type(color_edges[edge]) == type(0):
+            if isinstance(color_edges[edge], int):
                 color_edges2.append(EDGE_COLOR_LOOKUP[color_edges[edge]])
                 edge_weights.append(EDGE_WIDTH_LOOKUP[color_edges[edge]])
-            elif type(color_edges[edge]) == type(("string", 1)):
+            elif isinstance(color_edges[edge], tuple):
                 color_edges2.append(color_edges[edge][0])
                 edge_weights.append(color_edges[edge][1])
             else:
@@ -168,7 +170,7 @@ def visualize_UDG(
         color_edges2 = EDGE_COLOR_LOOKUP[0]
         edge_weights = EDGE_WIDTH_LOOKUP[0]
 
-    if vertex_edge == False:
+    if not vertex_edge:
         vertex_edge_radius = 0
     else:
         vertex_edge_radius = edgesize * np.array(edge_weights)
@@ -181,7 +183,7 @@ def visualize_UDG(
         linewidths=vertex_edge_radius,
         edgecolors="k",
     )
-    edges = nx.draw_networkx_edges(
+    nx.draw_networkx_edges(
         G, pos, width=edgesize * np.array(edge_weights), edge_color=color_edges2
     )
 
@@ -194,7 +196,7 @@ def visualize_UDG(
         draw_disks = np.array([draw_disks] * N)
 
     for i in range(N):
-        if draw_disks[i] == False:
+        if not draw_disks[i]:
             continue
         x1 = np.sin(np.linspace(0, 2 * np.pi, 101)) * radii
         y1 = np.cos(np.linspace(0, 2 * np.pi, 101)) * radii
@@ -215,7 +217,8 @@ def visualize_UDG(
             alpha=0.1,
         )
 
-    # ax.fill_between([X.min(0)[0] - radii,X.max(0)[0] + radii],[X.min(0)[1] - radii]*2,[X.max(0)[1] + radii]*2,color="#fbfbfb",zorder=-1000)
+    # ax.fill_between([X.min(0)[0] - radii,X.max(0)[0] + radii],[X.min(0)[1] - radii]*2,
+    # [X.max(0)[1] + radii]*2,color="#fbfbfb",zorder=-1000)
 
     return ax, G
 

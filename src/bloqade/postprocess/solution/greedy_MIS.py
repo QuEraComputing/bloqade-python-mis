@@ -86,7 +86,8 @@ class greedy_MIS_solution(Solution):
 
         Args:
             quantum_parameters (dict): Dictionary containing quantum parameters.
-            classical_parameters (dict, optional): Dictionary containing classical parameters. Defaults to an empty dictionary.
+            classical_parameters (dict, optional): Dictionary containing classical
+            parameters. Defaults to an empty dictionary.
 
         Returns:
             list[np.array]: List of candidate solutions for the MIS problem.
@@ -114,7 +115,9 @@ class greedy_MIS_solution(Solution):
 
         Args:
             quantum_parameters (dict): Dictionary containing quantum parameters.
-            classical_parameters (dict, optional): Dictionary containing classical parameters. Defaults to an empty dictionary.
+            classical_parameters (dict, optional): Dictionary containing classical
+            parameters.
+            Defaults to an empty dictionary.
 
         Returns:
             bool: True if quantum parameters exceed coherence time, False otherwise.
@@ -134,14 +137,15 @@ class greedy_MIS_solution(Solution):
 
         Args:
             quantum_parameters (dict): Dictionary containing quantum parameters.
-            classical_parameters (dict, optional): Dictionary containing classical parameters. Defaults to an empty dictionary.
+            classical_parameters (dict, optional): Dictionary containing classical
+            parameters. Defaults to an empty dictionary.
 
         Returns:
             float: Objective function value.
         """
         penalty = 1e3
 
-        if self.penalty(quantum_parameters, classical_parameters) == True:
+        if self.penalty(quantum_parameters, classical_parameters):
             return penalty
         else:
             solns = self.get_solution(quantum_parameters, classical_parameters)

@@ -51,7 +51,8 @@ solution = spectral_kmaxcut_solution(
 record.put(problem)
 record.put(solution)
 
-# classical_parameters = {"w0":-np.sin(0.9)*np.cos(0.4618), "w1":-np.cos(0.9)*np.cos(0.4618),"w2":-np.sin(0.4618)}
+# classical_parameters = {"w0":-np.sin(0.9)*np.cos(0.4618),
+# "w1":-np.cos(0.9)*np.cos(0.4618),"w2":-np.sin(0.4618)}
 # Optimized for a particular instance
 classical_parameters = {
     "w0": -0.7778392547192745,
@@ -138,7 +139,7 @@ for ctr in tqdm.trange(512):
 dout = np.array(dout)
 # %% Plot
 
-import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt  # noqa: F811, E402
 
 plt.rcParams["font.size"] = 20
 plt.rcParams["font.family"] = ["serif"]

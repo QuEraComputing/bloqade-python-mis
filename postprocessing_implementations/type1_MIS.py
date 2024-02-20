@@ -11,16 +11,17 @@ from bloqade.postprocess.solution.greedy_MIS import (
     classical_greedy_MIS_solution,
 )
 from bloqade.postprocess.optimizer.base_optimizer import Optimizer
-from bloqade.utils.visualize_UDG import get_UDG
 
 import bloqade.postprocess as postprocess
 import numpy as np
-import os, tqdm, json
+import os
+import tqdm
+import json
 
 filename = os.path.join(os.getcwd(), "DATA", "type1_MIS_data.json")
 
 # %%
-record = postprocess.record.local_record(filename)
+record = postprocess.record.local_record(filename)  # noqa: F811
 # record = recorder(local_file_path)
 
 N = 3
@@ -102,7 +103,7 @@ for sol in dout_c:
 
 # %%
 
-import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt  # noqa: E402
 
 plt.rcParams["font.size"] = 20
 plt.rcParams["font.family"] = ["serif"]

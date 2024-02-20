@@ -4,7 +4,7 @@ Created on Mon Nov  6 14:50:28 2023
 
 @author: jwurtz
 """
-from abc import ABC, abstractmethod, abstractstaticmethod, abstractproperty
+from abc import abstractmethod, abstractstaticmethod
 import json
 
 
