@@ -18,9 +18,14 @@ from bloqade.factory import (
 import bloqade.ir as _ir
 from bloqade.constants import RB_C6
 
+# import bloqade.utils.clustering as clustering
+
 import importlib.metadata
 
 __version__ = importlib.metadata.version("bloqade")
+
+
+print("HELLO FROM A PLUGIN")
 
 
 def tree_depth(depth: int = None):
