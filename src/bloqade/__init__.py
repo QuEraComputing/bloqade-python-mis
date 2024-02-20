@@ -27,6 +27,7 @@ __version__ = importlib.metadata.version("bloqade")
 
 print("HELLO FROM A PLUGIN")
 
+
 def tree_depth(depth: int = None):
     """Setting globally maximum depth for tree printing
 
