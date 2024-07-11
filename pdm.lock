@@ -1419,7 +1419,7 @@ files = [
 
 [[package]]
 name = "jupytext"
-version = "1.16.2"
+version = "1.16.3"
 requires_python = ">=3.8"
 summary = "Jupyter notebooks as Markdown documents, Julia, Python or R scripts"
 groups = ["dev"]
@@ -1432,8 +1432,8 @@ dependencies = [
     "tomli; python_version < \"3.11\"",
 ]
 files = [
-    {file = "jupytext-1.16.2-py3-none-any.whl", hash = "sha256:197a43fef31dca612b68b311e01b8abd54441c7e637810b16b6cb8f2ab66065e"},
-    {file = "jupytext-1.16.2.tar.gz", hash = "sha256:8627dd9becbbebd79cc4a4ed4727d89d78e606b4b464eab72357b3b029023a14"},
+    {file = "jupytext-1.16.3-py3-none-any.whl", hash = "sha256:870e0d7a716dcb1303df6ad1cec65e3315a20daedd808a55cb3dae2d56e4ed20"},
+    {file = "jupytext-1.16.3.tar.gz", hash = "sha256:1ebac990461dd9f477ff7feec9e3003fa1acc89f3c16ba01b73f79fd76f01a98"},
 ]
 
 [[package]]
