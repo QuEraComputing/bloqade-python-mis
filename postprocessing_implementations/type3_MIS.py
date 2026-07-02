@@ -20,7 +20,8 @@ import os
 import json
 import tqdm
 
-filename = os.path.join(os.getcwd(), "DATA", "23_12_1_t2_MIS.json")
+_here = os.path.dirname(os.path.abspath(__file__))
+filename = os.path.join(_here, "DATA", "23_12_1_t2_MIS.json")
 
 # %%
 record = postprocess.record.local_record(filename)
@@ -35,7 +36,7 @@ pos = np.array([x.flatten(), y.flatten()]).T
 perm = randgen.permutation(N**2)
 positions = pos[perm[0 : int(N**2 * 0.7)]]  # 30% random dropout
 
-prototype_graph = os.path.join(os.getcwd(), "generate_figures_pos.json")
+prototype_graph = os.path.join(_here, "generate_figures_pos.json")
 if seed_problem == 0:
     with open(prototype_graph, "r") as io:
         dat = json.load(io)

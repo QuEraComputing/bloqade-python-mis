@@ -19,7 +19,8 @@ import os
 import json
 import tqdm
 
-filename = os.path.join(os.getcwd(), "DATA", "type2_kmaxcut_data.json")
+_here = os.path.dirname(os.path.abspath(__file__))
+filename = os.path.join(_here, "DATA", "type2_kmaxcut_data.json")
 
 # %%
 record = postprocess.record.local_record(filename)
@@ -34,7 +35,7 @@ randgen = np.random.RandomState(seed_problem)
 # positions = pos[perm[0:int(N**2 * .7)]]
 
 
-prototype_graph = os.path.join(os.getcwd(), "generate_figures_pos.json")
+prototype_graph = os.path.join(_here, "generate_figures_pos.json")
 if seed_problem == 0:
     with open(prototype_graph, "r") as io:
         dat = json.load(io)
