@@ -9,7 +9,7 @@ Created on Mon Nov  6 14:12:26 2023
 from bloqade.postprocess.problem.k_maxcut import k_maxcut
 from bloqade.postprocess.solution.spectral_kmaxcut import spectral_kmaxcut_solution
 from bloqade.postprocess.optimizer.base_optimizer import Optimizer
-from bloqade.postprocess.utils.visualize_UDG import get_UDG
+from bloqade.utils.visualize_UDG import get_UDG
 from bloqade.utils.greedy_flip import greedy_flip
 
 import bloqade.postprocess as postprocess

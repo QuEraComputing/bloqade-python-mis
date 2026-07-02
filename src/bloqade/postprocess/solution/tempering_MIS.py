@@ -15,8 +15,8 @@ import numpy as np
 
 # import networkx as nx
 
-from bloqade import start
-from bloqade.ir import var
+from bloqade.analog import start
+from bloqade.analog.ir import var
 
 
 class tempering_MIS_solution(Solution):

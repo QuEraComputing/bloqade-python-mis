@@ -3,11 +3,11 @@ try:
 except ImportError:
     __path__ = __import__("pkgutil").extend_path(__path__, __name__)
 
-from bloqade.ir import var, cast, Variable, Literal, start
-from bloqade.ir import to_waveform as waveform
-from bloqade.serialize import load, save, loads, dumps
+from bloqade.analog.ir import var, cast, Variable, Literal, start
+from bloqade.analog.ir import to_waveform as waveform
+from bloqade.analog.serialize import load, save, loads, dumps
 
-from bloqade.factory import (
+from bloqade.analog.factory import (
     get_capabilities,
     piecewise_linear,
     piecewise_constant,
@@ -15,14 +15,14 @@ from bloqade.factory import (
     constant,
     rydberg_h,
 )
-import bloqade.ir as _ir
-from bloqade.constants import RB_C6
+import bloqade.analog.ir as _ir
+from bloqade.analog.constants import RB_C6
 
 # import bloqade.utils.clustering as clustering
 
 import importlib.metadata
 
-__version__ = importlib.metadata.version("bloqade")
+__version__ = importlib.metadata.version("bloqade-analog")
 
 
 print("HELLO FROM A PLUGIN")

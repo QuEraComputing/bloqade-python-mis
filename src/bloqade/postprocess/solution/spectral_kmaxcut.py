@@ -15,8 +15,8 @@ import numpy as np
 # import networkx as nx
 import scipy
 
-from bloqade import start
-from bloqade.ir import var
+from bloqade.analog import start
+from bloqade.analog.ir import var
 
 
 class spectral_kmaxcut_solution(Solution):

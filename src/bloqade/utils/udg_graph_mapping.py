@@ -113,7 +113,7 @@ def rowify(points0: np.ndarray, horizontal_threshold: float, row_threshold: floa
     assert len(points0.shape) == 2, "Data must be 2d"
     assert points0.shape[1] == 2, "Data must be 2d"
 
-    rows = __row_cluster(points0[:, 1], row_threshold, plotit=False)
+    rows = __row_cluster(points0[:, 1], row_threshold)
 
     point_assignments = np.array([np.argmin(abs(rows - xx)) for xx in points0[:, 1]])
 
@@ -124,8 +124,7 @@ def rowify(points0: np.ndarray, horizontal_threshold: float, row_threshold: floa
         points_in = np.where(point_assignments == ind)[0]
 
         column = __row_cluster(
-            points0[points_in, 0], horizontal_threshold, plotit=False
-        )
+            points0[points_in, 0], horizontal_threshold)
         all_columns.append(column)
 
         all_atoms += [(xx, rows[ind]) for xx in column]

@@ -6,11 +6,12 @@ authors = [
     {name = "Phillip Weinberg", email = "pweinberg@quera.com"},
 ]
 dependencies = [
-    "bloqade>=0.14.0",
+    "bloqade>=0.34.0",
     "numpy>=1.26.2",
     "networkx>=3.2.1",
+    "scikit-optimize>=0.10.2",
 ]
-requires-python = ">=3.9,<3.12"
+requires-python = ">=3.10"
 readme = "README.md"
 license = {text = "Apache 2.0"}
 

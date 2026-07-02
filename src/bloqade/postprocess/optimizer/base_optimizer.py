@@ -13,7 +13,6 @@ import json
 import numpy as np
 
 import bloqade.postprocess as postprocess
-import bloqade
 
 # import functools
 

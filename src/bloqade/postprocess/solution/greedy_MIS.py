@@ -12,8 +12,8 @@ from bloqade.utils.udg_graph_mapping import logical_to_physical
 
 import numpy as np
 
-from bloqade import start
-from bloqade.ir import var
+from bloqade.analog import start
+from bloqade.analog.ir import var
 
 
 class greedy_MIS_solution(Solution):

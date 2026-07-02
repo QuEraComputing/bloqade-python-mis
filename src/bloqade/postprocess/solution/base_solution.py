@@ -8,7 +8,8 @@ from bloqade.postprocess.problem.base_problem import Problem
 import bloqade.postprocess as postprocess
 from abc import ABC, abstractmethod, abstractproperty
 
-import bloqade
+from bloqade.analog.task.batch import LocalBatch as _LocalBatch
+from bloqade.analog import loads as _analog_loads
 import json
 
 
@@ -213,7 +214,7 @@ class Solution(ABC):
 
         bstr = job.report().bitstrings(False)
 
-        if isinstance(job, bloqade.task.batch.LocalBatch):
+        if isinstance(job, _LocalBatch):
             pass
         else:
             isready = len(job.get_completed_tasks().tasks) == len(job.tasks)
@@ -264,7 +265,7 @@ class Solution(ABC):
             # key = {a:tuple(b) for a,b in dict(key).items()}.items()
             key = {a: b for a, b in dict(key).items()}.items()
 
-            job = bloqade.loads(json.dumps(val))
+            job = _analog_loads(json.dumps(val))
             out._job_tape[tuple(key)] = job
 
         return out
