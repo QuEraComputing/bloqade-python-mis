@@ -25,8 +25,6 @@ import importlib.metadata
 __version__ = importlib.metadata.version("bloqade-analog")
 
 
-print("HELLO FROM A PLUGIN")
-
 
 def tree_depth(depth: int = None):
     """Setting globally maximum depth for tree printing

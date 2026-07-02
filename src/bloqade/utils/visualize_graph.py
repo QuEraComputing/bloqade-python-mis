@@ -166,7 +166,7 @@ def visualize_graph(
                 color_edges2.append(color_edges[edge][0])
                 edge_weights.append(color_edges[edge][1])
             else:
-                raise BaseException(
+                raise ValueError(
                     "Bad color_edges specifier! " + repr(color_edges[edge])
                 )
     else:

@@ -4,7 +4,7 @@ Created on Mon Nov  6 14:50:28 2023
 
 @author: jwurtz
 """
-from abc import abstractmethod, abstractstaticmethod
+from abc import abstractmethod
 import json
 
 
@@ -33,8 +33,9 @@ class record(dict):
         Serialize record to file
         """
 
-    @abstractstaticmethod
-    def load(self):
+    @staticmethod
+    @abstractmethod
+    def load():
         """
         Load data from file
         """

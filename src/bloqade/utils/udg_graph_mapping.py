@@ -42,7 +42,7 @@ def find_UDG_radius(position: list[list[float]], graph: nx.Graph):
 
     if rmin > rmax:
         print(rmin, rmax)
-        raise BaseException("Graph is not a unit disk graph!")
+        raise ValueError("Graph is not a unit disk graph!")
 
     return np.sqrt(rmin * rmax), rmin, rmax
 

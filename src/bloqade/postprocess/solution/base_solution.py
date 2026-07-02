@@ -6,7 +6,7 @@ Created on Mon Nov  6 14:10:45 2023
 """
 from bloqade.postprocess.problem.base_problem import Problem
 import bloqade.postprocess as postprocess
-from abc import ABC, abstractmethod, abstractproperty
+from abc import ABC, abstractmethod
 
 from bloqade.analog.task.batch import LocalBatch as _LocalBatch
 from bloqade.analog import loads as _analog_loads
@@ -97,14 +97,16 @@ class Solution(ABC):
         """
         return None
 
-    @abstractproperty
+    @property
+    @abstractmethod
     def classical_parameters(self) -> list[str]:
         """
         List of keys for classical_parameters
         """
         return []
 
-    @abstractproperty
+    @property
+    @abstractmethod
     def quantum_parameters(self) -> list[str]:
         """
         Provides the list of keys for classical parameters.
@@ -179,16 +181,18 @@ class Solution(ABC):
                 .run(self._backend["num_shots"])
             )
         elif self._backend["quantum"] == "internal_aquila":
-            # fname = "C:\\Users\\qpc1\\Documents\\GitHub
-            # \\hybrid_jobs\\hybrid_algorithms\\prod_config.json"
-            fname = "C:\\Users\\jwurtz\\Downloads\\prod_config.json"
+            fname = self._backend.get("config_file")
+            if fname is None:
+                raise ValueError(
+                    "Backend 'internal_aquila' requires 'config_file' key in backend dict"
+                )
             submitted_job = (
                 self.ansatz(quantum_parameters)
                 .quera.device(fname)
                 .run_async(self._backend["num_shots"])
             )
         else:
-            raise BaseException("Bad backend")
+            raise ValueError(f"Unknown backend: {self._backend['quantum']!r}")
 
         # Save to tape
         key = tuple(quantum_parameters.items())
