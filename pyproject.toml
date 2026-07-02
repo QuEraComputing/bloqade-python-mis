@@ -6,10 +6,10 @@ authors = [
     {name = "Phillip Weinberg", email = "pweinberg@quera.com"},
 ]
 dependencies = [
-    "bloqade>=0.34.0",
-    "numpy>=1.26.2",
-    "networkx>=3.2.1",
-    "scikit-optimize>=0.10.2",
+    "bloqade==0.34.0",
+    "numpy==2.2.6",
+    "networkx==3.2.1",
+    "scikit-optimize==0.10.2",
 ]
 requires-python = ">=3.10"
 readme = "README.md"
